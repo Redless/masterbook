@@ -1,4 +1,4 @@
-//TO DO: make the pages have different info. make the intro have different info. add back cover.
+//TO DO: make the intro have different info. add back cover.
 import processing.pdf.*;
 float scale;
 String creator;
@@ -19,6 +19,8 @@ PFont titlefont;
 boolean leftHandSide;
 boolean rightHandSide;
 PFont numFont;
+String heading;
+String infopagetext;
 
 void drawFrontCover() {
   textAlign(LEFT);
@@ -31,7 +33,7 @@ void drawFrontCover() {
 
   fill(252,242,228);
 
-  PImage img = loadImage("MSpaintient.png");
+  PImage img = loadImage("MSpaintient3wmask.png");
   image(img,0, 80*scale, 560*scale, 720*scale);
   
   fill(73,57,42);
@@ -95,10 +97,11 @@ void drawBackCover() {
   fill(132,212,210);
   textFont(boldfont);
   textSize(25);
-  text("A FEW NOTES ON HOW TO PLAY THESE SCRIPTS",105,105*105/60);
+  
+  text(heading,105,105*105/60);
   fill(250);
   textFont(otherfont);
-  String stringOn = "Our group plays with table talk on completely. This makes the game more social in our opinion, and we enjoy it more. Also, this means that regardless of the number of protagonists, there will never be any coordination issues for the protagonists, which means that scripts are about as difficult for three people as they are for one person, uniformly across the board. Know that all scripts in this collection are designed for full table talk, though the mastermind is always allowed to overhear what the protagonists are saying.\n\nIn our group, the protagonists preferentially prevent the more dangerous loss conditions. For example, if \"sealed item\" being threatened as a main plot, we will almost always forbid intrigue on shrine. That's because, if sealed item really is a main plot, and the protagonists let the mastermind win loop 1 without revealing any of his tricks to get intrigue on the shrine (or his other win conditions), the protagonists are often in a really bad spot. On the other hand, if we don't respect sealed item at all, and trying to bluff sealed item is a big part of the mastermind's strategy, it might trivialize a weaker main plot that's relying on misdirection to win. So, the scripts in here are designed with the expectation that the protagonists are taking more precautions to deal with the very difficult main plots and fewer precautions to deal with the easier main plots.\n\nThe twin role was translated extremely poorly. Per the original Japanese rules, the twin is considered in the opposite location for every incident's effects, not just incidents triggered by the twin. So if twin is in school and hospital incident goes off, the twin dies. If they're in hospital, they survive. Note that for the purposes of the detective's ability, the twin is considered in their actual (not diagonally opposite) location.\n\nA word of advice for the protagonists: if a script seems hopeless, make sure you aren't missing something. In particular, make sure you're using all the goodwill abilities at your disposal. Remember, the Journalist is extremely strong because he can be used to find culprits, set off incidents, and manipulate the extra gauge, so goodwill him as much as possible.";
+  String stringOn = infopagetext;
   String word;
   int xval = 105;
   for (float yval = 105*105/60 + 35; yval < 9999; yval = yval + 15*scale+5) {
@@ -174,10 +177,10 @@ void drawLeftInnerPage() {
   fill(132,212,210);
   textFont(boldfont);
   textSize(25);
-  text("A FEW NOTES ON HOW TO PLAY THESE SCRIPTS",105,105*105/60);
+  text(heading,105,105*105/60);
   fill(250);
   textFont(otherfont);
-  String stringOn = "Our group plays with table talk on completely. This makes the game more social in our opinion, and we enjoy it more. Also, this means that regardless of the number of protagonists, there will never be any coordination issues for the protagonists, which means that scripts are about as difficult for three people as they are for one person, uniformly across the board. Know that all scripts in this collection are designed for full table talk, though the mastermind is always allowed to overhear what the protagonists are saying.\n\nIn our group, the protagonists preferentially prevent the more dangerous loss conditions. For example, if \"sealed item\" being threatened as a main plot, we will almost always forbid intrigue on shrine. That's because, if sealed item really is a main plot, and the protagonists let the mastermind win loop 1 without revealing any of his tricks to get intrigue on the shrine (or his other win conditions), the protagonists are often in a really bad spot. On the other hand, if we don't respect sealed item at all, and trying to bluff sealed item is a big part of the mastermind's strategy, it might trivialize a weaker main plot that's relying on misdirection to win. So, the scripts in here are designed with the expectation that the protagonists are taking more precautions to deal with the very difficult main plots and fewer precautions to deal with the easier main plots.\n\nThe twin role was translated extremely poorly. Per the original Japanese rules, the twin is considered in the opposite location for every incident's effects, not just incidents triggered by the twin. So if twin is in school and hospital incident goes off, the twin dies. If they're in hospital, they survive. Note that for the purposes of the detective's ability, the twin is considered in their actual (not diagonally opposite) location.\n\nA word of advice for the protagonists: if a script seems hopeless, make sure you aren't missing something. In particular, make sure you're using all the goodwill abilities at your disposal. Remember, the Journalist is extremely strong because he can be used to find culprits, set off incidents, and manipulate the extra gauge, so goodwill him as much as possible.";
+  String stringOn = infopagetext;
   String word;
   int xval = 105;
   for (float yval = 105*105/60 + 35; yval < 9999; yval = yval + 15*scale+5) {
@@ -404,6 +407,9 @@ void setup() {
   PGraphicsPDF pdf = (PGraphicsPDF) g;
   background(255);
   drawFrontCover();
+  heading = "ACKNOWLEDGEMENTS AND FURTHER INFO";
+  infopagetext = "All scriptwriting, art (if you can call it that) and code was done by Gabriel \"Redless\" Brookman\n\nGraphic design was based on the original by Marie-Eve Joly and Olivier Lamontagne. Implemented by Gabriel \"Redless\" Brookman\n\nA thousand thanks to my playtesters. They are extremely good at the game, always willing to test my scripts, and give constructive feedback. Best of all, they are great friends: Oscar Kimzey, David Chae, Justin Soll, Lucas Sass, and Joseph Luther.\n\nOriginal Game Design by BakaFire, published in English by ZMAN games\n\nFor more scripts that our group has played and enjoyed, check out my script collection at https://github.com/Redless/script-collection. It also should have up-to-date versions of this handbook and the script cards included with it.\n\nFor a program that lets you generate script cards like those included in this collection, check out https://github.com/Redless/loopcard.\n\nFor a program that allows you to generate booklets like this one, check out\nhttps://github.com/Redless/masterbook.\n\nFor questions, comments, or feedback for me or to ask advice about how to mastermind the scripts in this collection or about how to use the software mentioned above, contact me at brookmangabriel@gmail.com.\n\nBlack lives matter. Have a great day.";
+  
   drawBackCover();
   pdf.nextPage();
   pushMatrix();
@@ -426,9 +432,13 @@ void setup() {
   scriptnumber = "4";
   
   drawRightHandSide();
+  heading = "WHAT IS THIS?";
+  infopagetext = "For the last two years, my friends and I have played Tragedy Looper once a week. I've written and masterminded many scripts for them, and this collection is comprised of four of the best. The scripts in here are from the Mystery Circle tragedy set, and assume a familiarity with the set, so you should play at least the first three officially published Mystery Circle scripts before you play these. Furthermore, the scripts in this collection were specially designed and chosen so that they explored different themes, elements, and ideas than the scripts included with the expansion. In my opinion, Mystery Circle is a masterpiece of a tragedy set, and so there are a metric ton of different directions you can take scripts written in it. It is my hope that these scripts broaden your mind about how this tragedy set works, and lead to games of Tragedy Looper that are both elegant and intellectual.";
   drawLeftInnerPage();
   pdf.nextPage();
   popMatrix();
+  infopagetext = "Our group plays with table talk on completely. This makes the game more social in our opinion, and we enjoy it more. Also, this means that regardless of the number of protagonists, there will never be any coordination issues for the protagonists, which means that scripts are about as difficult for three people as they are for one person, uniformly across the board. Know that all scripts in this collection are designed for full table talk, though the mastermind is always allowed to overhear what the protagonists are saying.\n\nIn our group, the protagonists preferentially prevent the more dangerous loss conditions. For example, if \"sealed item\" being threatened as a main plot, we will almost always forbid intrigue on shrine. That's because, if sealed item really is a main plot, and the protagonists let the mastermind win loop 1 without revealing any of his tricks to get intrigue on the shrine (or his other win conditions), the protagonists are often in a really bad spot. On the other hand, if we don't respect sealed item at all, and trying to bluff sealed item is a big part of the mastermind's strategy, it might trivialize a weaker main plot that's relying on misdirection to win. So, the scripts in here are designed with the expectation that the protagonists are taking more precautions to deal with the very difficult main plots and fewer precautions to deal with the easier main plots.\n\nThe twin role was translated extremely poorly. Per the original Japanese rules, the twin is considered in the opposite location for every incident's effects, not just incidents triggered by the twin. So if twin is in school and hospital incident goes off, the twin dies. If they're in hospital, they survive. Note that for the purposes of the detective's ability, the twin is considered in their actual (not diagonally opposite) location.\n\nA word of advice for the protagonists: if a script seems hopeless, make sure you aren't missing something. In particular, make sure you're using all the goodwill abilities at your disposal. Remember, the Journalist is extremely strong because he can be used to find culprits, set off incidents, and manipulate the extra gauge, so goodwill him as much as possible.";
+  heading = "A FEW NOTES ON HOW TO PLAY THESE SCRIPTS";
   drawRightInnerPage();
   //load third script
   
@@ -453,7 +463,7 @@ void setup() {
   //load second script
   
   specifics = "Detection Obsession is a unique script that exploits the interaction between the boss's ability and the detective's ability to bluff that the patient is the obstinate. In order to win, the protagonists will need to keenly use the doctor and journalist's abilities in concert to get the office worker's incident off so that the boss cannot force the patient to commit his bestial murder.";
-  story = "The patient was incurably insane, and he took it out on the people around him. Or was he? That's the manipulative lie that the boss, true mastermind of the incident, would have us believe. The humble office worker may be a fool, yet he knows the truth and must warn the patient before it's too late.";
+  story = "The patient was incurably insane, and always ready to kill. Or was he? That's the manipulative lie that the boss, true mastermind of the incident, would have us believe. The humble office worker may be a fool, yet he knows the truth and must warn the patient before it's too late.";
   hints = "Loop 1 should be a free victory, as long as you place a paranoia on the alien every turn. In the mean time, aggressively place forbid goodwill on the journalist or (if he already has at least one goodwill) the office worker, since finding out culprits and especially the office worker's role is very damaging to the coverup that you're trying to sell. During the second loop, continue trying to hide your information with aggressive forbid goodwills. Eventually you'll be forced to out the alien as the conspiracy theorist, but hide this for as long as possible. On some loop, when they're about to figure out the trick, you should transition towards trying to get the boy student's incident off, so you can satisfy the quilt of incident loss condition that way. If worst comes to horrible, you may have to do a movement mixup to kill a friend. Since they're your best late-loop win condition and also the easiest role to hide, try to kill the minimum number of unique people possible, to leave as many friend options open as you can. It's for this reason that I recommend adding or removing characters with the role \"person\" rather than adjusting the loop count if you're trying to balance this script for more or less competent players.";
   wincons = new String[] {"Extra Gauge is three or more at loop end","(Main Plot: Quilt of Incidents victory condition)","Kill the friends (Journalist, Girl Student)","Using: Serial Murders, Bestial Murder"};
   title = "DETECTION OBSESSION";
@@ -468,16 +478,16 @@ void setup() {
   drawRightHandSide();
   //load first script
   
-  specifics = "Insanity Defense was made to complement the scripts originally bundled with the English release of the Mystery Circle expansion. It explores the Murder Plan and Smell of Gunpowder plots, which were not explored in those boxed scripts. It's a fair bit easier than the other scripts included in the quarantine collection, and requires the mastermind to improvise a bit to win all four loops without revealing all the roles.";
-  story = "The patient was incurably insane, and he took it out on the people around him. The doctors, others admitted to the hospital, and the people who came to visit him all died mysteriously. Behind him lurks a much greater threat, a shadowy organization weaponizing this insanity and inflicting fear on the populace for their own nefarious ends. As the bodies pile up, survival becomes less and less certain.";
-  hints = "In order to win the first loop, your best bet is to aim for a quick kill on the office worker by moving him up and moving the doctor out. After that, there are a number of options available to you. One wincon to think about is the smell of gunpowder. You have 6 days worth of manual paranoia placement, and hard-for-protagonists-to-kill characters such as the office worker and patient to play it on. Since the protagonists can remove 4 of this, you will be left with 8 paranoia on net. However, if the protagonists play goodwill on the doctor early, then you can co-opt his goodwill ability to place 4 more paranoia and close the gap to fulfill the smell of gunpowder wincon. You may also use the henchman's ability to place one more paranoia, but because of his suicide you will not be able to do much more than this. Another win condition you can go for is using suspicious letter to move the office worker to the hospital on the final day. Since he cannot enter the school, and has a 2-paranoia limit, you'll be able to guarantee this easily, so the protagonists will have to move other characters into the hospital in order to save him. Of course, you can prevent this by killing those other people using either the patient or the serial murders. Your other wincons will require the shrine maiden, who is one of your easiest to hide roles and who is reliant on the easy-to-kill doctor, or the serial murders, which are dangerous because they can kill important people or reveal the twin. However, I think if you focus on hiding roles (especially killer and twin) you should be able to finesse out the win.";
+  specifics = "Insanity Defense was made to complement the scripts originally bundled with the English release of the Mystery Circle expansion. Its main gimmicks are the use of evil doctor to enable Smell of Gundpowder, and the use of suspicious letter to guarantee a serial kill on the key person. It's a fair bit easier than the other scripts included in the quarantine collection, and requires the mastermind to improvise a bit to win all four loops without revealing all the roles.";
+  story = "The patient was incurably insane, and always ready to kill. Behind him lurks a much greater threat, a shadowy organization weaponizing his insanity to inflicting fear on the populace for their own nefarious ends. As the bodies pile up, survival becomes less and less certain.";
+  hints = "In order to win the first loop, your best bet is to aim for a quick kill on the office worker by moving him up and moving the doctor out. After that, there are a number of options available to you. One wincon to think about is the smell of gunpowder. You have 6 days worth of manual paranoia placement, and hard-for-protagonists-to-kill characters such as the office worker and patient to play it on. Since the protagonists can remove 4 of this, you will be left with 8 paranoia on net. However, if the protagonists play goodwill on the doctor early, then you can co-opt his goodwill ability to place 4 more paranoia and close the gap to fulfill the Smell of Gunpowder wincon. You may also use the paranoiac's ability to place two more paranoia, but because of his suicide you will not be able to do much more than this. Another win condition you can go for is using suspicious letter to move the office worker to the hospital on the final day. Since he cannot enter the school, and has a 2-paranoia limit, you'll be able to guarantee this easily, so the protagonists will have to move other characters into the hospital in order to save him. Of course, you can prevent this by killing those other people using either the patient or the serial murders. Your other wincons will require the shrine maiden, who is one of your easiest to hide roles and who is reliant on the easy-to-kill doctor, or the serial murders, which are dangerous because they can kill important people or reveal the twin. However, I think if you focus on hiding roles (especially killer and twin) you should be able to finesse out the win.";
 
   wincons = new String[] {"Kill the Key Person (Office Worker)","Using: Serial Murders, Serial Killer's ability, Killer's ability","Kill the Protagonists","Using: Killer's Ability","12 or more paranoia on living characters when the loop ends","(Subplot: Smell of Gunpowder victory condition)"};
   title = "INSANITY DEFENSE";
   set = "Mystery Circle";
-  counts = new String[] {"4"};
-  difficulties = new int[] {4};
-  looppossibilities = 1;
+  counts = new String[] {"4","5"};
+  difficulties = new int[] {4,2};
+  looppossibilities = 2;
   printwincons = true;
   scriptnumber = "1";
   
